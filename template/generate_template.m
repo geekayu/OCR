@@ -1,6 +1,10 @@
 clc,clear all    
 [x,y]=imread('OCR-A.png'); % y:colormap
-z = ~im2bw(x,y); % convert to binary 1 for alphabet 0 for space
+if isempty(y)==1
+    z = ~im2bw(x);
+else
+    z = ~im2bw(x,y); % convert to binary 1 for alphabet 0 for space
+end
 %-------image boundary -----------
 [row , col ] = find(z);
 col_temp = unique(col);
