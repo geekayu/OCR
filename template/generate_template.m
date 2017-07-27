@@ -1,4 +1,10 @@
-clc,clear all    
+clc,clear all  
+small_letter = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+capital_letter = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+numbers = {0,1,2,3,4,5,6,7,8,9};
+numbers_alt = {1,2,3,4,5,6,7,8,9,0};
+pattern = {};
+pattern = [small_letter,capital_letter,numbers];  
 [x,y]=imread('OCR-A.png'); % y:colormap
 if isempty(y)==1
     z = ~im2bw(x);
@@ -11,7 +17,7 @@ col_temp = unique(col);
 row_temp = unique(row);
 z_temp = z(min(row_temp):max(row_temp),min(col_temp):max(col_temp));
 %------letter-----------------
-temp_data = cell(1,62);
+template_data = cell(1,62);
 i=0;
 while 1
     % target: a row/line at a time
@@ -40,12 +46,13 @@ while 1
         [x,y] = find(temp_letter);
         %----letter in its original dimensions,thus no more fixed dimensions-----
         letter = temp_letter(min(x):max(x),min(y):max(y));
-        %temp_data(i)=letter;
+        %template_data(i)=letter;
         xl = size(letter);
         temp_cell = mat2cell(letter,[xl(1)],[xl(2)]);
-        temp_data(1,i)=temp_cell;
-        imshow(letter)
-        input('e');
+        pattern(2,i)=temp_cell;
+        %imshow(letter)
+        %input('check');
     end    
 end
-save('template_ocr_a','temp_data')
+template_data = pattern;
+save('template_ocr_a','template_data')
