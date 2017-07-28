@@ -5,7 +5,7 @@ numbers = {0,1,2,3,4,5,6,7,8,9};
 numbers_alt = {1,2,3,4,5,6,7,8,9,0};
 pattern = {};
 pattern = [small_letter,capital_letter,numbers];  
-[x,y]=imread('OCR-A.png'); % y:colormap
+[x,y]=imread('OCR_A.gif'); % y:colormap
 if isempty(y)==1
     z = ~im2bw(x);
 else
