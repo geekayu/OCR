@@ -82,14 +82,15 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 [filename, pathname] = uigetfile({'*.jpg;*.tif;*.png;*.gif','All Image Files';...
           '*.*','All Files' });
 if filename
+    filename = fullfile(pathname, filename)
     set(handles.uipanel5,'Visible','on')
-    addpath(pathname)
+    addpath('template')
     imshow(filename,'Parent',handles.axes1)
     [x,y] = imread(filename);
     assignin('base','y',y)
     assignin('base','x',x)
-    run('temp_ocr_a')    
-    rmpath(pathname)
+    run('generate_template')    
+    rmpath('template')
     cla(handles.axes1)
     set(handles.uipanel5,'Visible','off')
     
@@ -105,12 +106,14 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 [filename, pathname] = uigetfile({'*.jpg;*.tif;*.png;*.gif','All Image Files';...
           '*.*','All Files' });
 if filename
+    filename = fullfile(pathname, filename)
     set(handles.uipanel5,'Visible','on')
     imshow(filename,'Parent',handles.axes1)
-    image_file = filename;
     addpath(pathname)
-    assignin('base','image_file',image_file)
-    run('Start_OCR')
+    [x,y] = imread(filename);
+    assignin('base','y',y)
+    assignin('base','x',x)
+    run('ocr')
     rmpath(pathname)
     cla(handles.axes1)
     set(handles.uipanel5,'Visible','off')

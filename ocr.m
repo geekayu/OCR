@@ -1,6 +1,4 @@
-clc,clear all  
 addpath('template')
-[x,y]=imread('sample_images/numbers001.tif'); % y:colormap
 if isempty(y)==1
     z = ~im2bw(x);
 else
@@ -11,7 +9,7 @@ col_temp = unique(col);
 row_temp = unique(row);
 z_temp = z(min(row_temp):max(row_temp),min(col_temp):max(col_temp));
 %---cropped the image and now loading the templates
-load template_ocr_a.mat
+load template_ocr_a
 template_data = template_data(:,1:62); %---filter---
 file_data = fopen('result.txt','wt');
 while 1
@@ -64,7 +62,6 @@ while 1
             end
         end
         result = cell2mat(let); 
-        %-----amount of sapce calculated---------
         space_content='';
         space = gap_size(loop,1)/min_space-1;
         if space>1
