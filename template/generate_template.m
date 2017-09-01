@@ -58,3 +58,4 @@ end
 template_data = pattern;
 newfilename = fullfile('template', 'template_ocr_a');
 save(newfilename, 'template_data')
+h = msgbox('Template Created Successfully');

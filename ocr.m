@@ -74,4 +74,5 @@ while 1
 end
 fclose(file_data);
 winopen('result.txt')
+h = msgbox('Text Extracted Successfully');
 rmpath('template')

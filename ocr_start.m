@@ -79,23 +79,37 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[filename, pathname] = uigetfile({'*.jpg;*.tif;*.png;*.gif','All Image Files';...
-          '*.*','All Files' });
-if filename
-    filename = fullfile(pathname, filename)
-    set(handles.uipanel5,'Visible','on')
-    addpath('template')
-    imshow(filename,'Parent',handles.axes1)
-    [x,y] = imread(filename);
-    assignin('base','y',y)
-    assignin('base','x',x)
-    run('generate_template')    
-    rmpath('template')
-    cla(handles.axes1)
-    set(handles.uipanel5,'Visible','off')
-    
-    
+set(handles.pushbutton4,'Visible','off')
+while 1
+    [filename, pathname] = uigetfile({'*.jpg;*.tif;*.png;*.gif','All Image Files';...
+              '*.*','All Files' });
+    if filename
+        set(handles.uipanel5,'Visible','on')
+        addpath(pathname)
+        imshow(filename,'Parent',handles.axes1)
+        choice = questdlg('Image Selected', ...
+                        'Dessert Menu', ...
+                        'Back','Continue','Cancel');
+        switch choice
+            case 'Back'
+                cla(handles.axes1)
+            case 'Continue'
+                [x,y] = imread(filename);
+                assignin('base','y',y)
+                assignin('base','x',x)
+                run('generate_template')    
+                break
+            case 'Cancel'
+                break
+        end
+    else
+        break
+    end
 end
+rmpath(pathname)
+cla(handles.axes1)
+set(handles.uipanel5,'Visible','off')
+set(handles.pushbutton4,'Visible','on')
 
 
 % --- Executes on button press in pushbutton4.
@@ -103,19 +117,32 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[filename, pathname] = uigetfile({'*.jpg;*.tif;*.png;*.gif','All Image Files';...
-          '*.*','All Files' });
-if filename
-    filename = fullfile(pathname, filename)
-    set(handles.uipanel5,'Visible','on')
-    imshow(filename,'Parent',handles.axes1)
-    addpath(pathname)
-    [x,y] = imread(filename);
-    assignin('base','y',y)
-    assignin('base','x',x)
-    run('ocr')
-    rmpath(pathname)
-    cla(handles.axes1)
-    set(handles.uipanel5,'Visible','off')
-    
+set(handles.pushbutton3,'Visible','off')
+while 1
+    [filename, pathname] = uigetfile({'*.jpg;*.tif;*.png;*.gif','All Image Files';...
+              '*.*','All Files' });
+    if filename
+        set(handles.uipanel5,'Visible','on')
+        addpath(pathname)
+        imshow(filename,'Parent',handles.axes1)
+        choice = questdlg('Image Selected', ...
+                        'Dessert Menu', ...
+                        'Back','Continue','Cancel');
+        switch choice
+            case 'Back'
+                cla(handles.axes1)
+            case 'Continue'
+                [x,y] = imread(filename);
+                assignin('base','y',y)
+                assignin('base','x',x)
+                run('ocr')  
+                break
+            case 'Cancel'
+                break
+        end
+    end
 end
+rmpath(pathname)
+cla(handles.axes1)
+set(handles.uipanel5,'Visible','off')
+set(handles.pushbutton3,'Visible','on')
